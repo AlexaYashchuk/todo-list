@@ -49,19 +49,24 @@ function TodoList() {
     setToDoList(newToDoListDelete);
   };
 
+  const [editTaskValue, setEditTaskValue] = useState("");
+
   const editTask = (index) => {
     const newToDoList = [...toDoList];
     newToDoList[index].edit = !newToDoList[index].edit;
+    if (!newToDoList[index].edit) {
+      setEditTaskValue("");
+    } else {
+      setEditTaskValue(newToDoList[index].task);
+    }
     setToDoList(newToDoList);
   };
 
-  const [editTaskValue, setEditTaskValue] = useState("");
   const updateTask = (index) => {
     const newToDoList = [...toDoList];
     newToDoList[index].task = editTaskValue;
     newToDoList[index].edit = false;
     setToDoList(newToDoList);
-    setEditTaskValue("");
   };
 
   const updateTaskEnter = (event, index) => {
@@ -70,7 +75,6 @@ function TodoList() {
       newToDoList[index].task = editTaskValue;
       newToDoList[index].edit = false;
       setToDoList(newToDoList);
-      setEditTaskValue("");
     }
   };
 
@@ -79,6 +83,7 @@ function TodoList() {
       <h1>Get things done!</h1>
       <div className="addTask">
         <Input
+          maxlength="50"
           placeholder="What is the task today?"
           type="text"
           value={toDoTask}
@@ -88,7 +93,7 @@ function TodoList() {
           onKeyUp={addToDoEnter}
         />
         <Button color="purple" variant="solid" onClick={addToDo}>
-          Add
+          Add Task
         </Button>
       </div>
 
@@ -129,6 +134,7 @@ function TodoList() {
               ) : (
                 <div className="itemUpdate">
                   <Input
+                    maxlength="50"
                     onMouseEnter={inputFocusEdit}
                     ref={inputRefEdit}
                     type="text"
