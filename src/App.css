@@ -6,51 +6,45 @@
   background-color: blueviolet;
   border-radius: 1em;
 }
-
-/* .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
+.mainDiv {
+  background-color: rgb(180, 130, 228);
+  border-radius: 1em;
   padding: 2em;
 }
-
-.read-the-docs {
-  color: #888;
-} */
 .addTask {
   display: inline-flex;
   width: 100%;
   padding-bottom: 1em;
 }
-.itemTask {
-  display: inline-flex;
-  padding-bottom: 0.5em;
-}
 .toDoList {
   display: grid;
+}
+.itemTask {
+  display: flex;
+  padding-bottom: 0.5em;
+  background-color: rgb(180, 130, 228);
+}
+
+.itemTask Button:first-child {
+  flex: 0 0 80%;
+  border-radius: 0%;
+}
+
+.itemTask Button:nth-child(2),
+.itemTask Button:nth-child(3) {
+  flex: 0 0 10%;
+  border-radius: 0%;
+}
+.itemUpdate {
+  display: flex;
+  align-items: center;
+  padding-bottom: 0.5em;
+}
+.itemUpdate Input:first-child {
+  flex: 0 0 80%;
+  border-radius: 0%;
+}
+.itemUpdate Button:nth-child(2) {
+  flex: 0 0 20%;
+  border-radius: 0%;
 }
