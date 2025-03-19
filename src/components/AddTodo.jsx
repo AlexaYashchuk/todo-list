@@ -70,6 +70,17 @@ export const AddToDo = () => {
     setEditTaskValue("");
   };
 
+  const updateTaskEnter = (event, id, value) => {
+    const newList = [...toDoList];
+    newList.map((item) => {
+      if (item.id === id && event.key === "Enter") {
+        item.task = value;
+        item.edit = false;
+      }
+    });
+    setToDoList(newList);
+  };
+
   return (
     <>
       <div className="addTask">
@@ -94,6 +105,7 @@ export const AddToDo = () => {
         editTask={editTask}
         editTaskValue={editTaskValue}
         setEditTaskValue={setEditTaskValue}
+        updateTaskEnter={updateTaskEnter}
       />
     </>
   );

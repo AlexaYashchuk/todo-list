@@ -10,6 +10,7 @@ export const ListTodo = ({
   editTask,
   editTaskValue,
   setEditTaskValue,
+  updateTaskEnter,
 }) => {
   console.log(toDoList);
 
@@ -76,7 +77,9 @@ export const ListTodo = ({
                   ref={inputRefEdit}
                   type="text"
                   value={editTaskValue}
-                  // onKeyDown={(event) => updateTaskEnter(event, index)}
+                  onKeyDown={(event) =>
+                    updateTaskEnter(event, item.id, editTaskValue)
+                  }
                   onChange={(event) => setEditTaskValue(event.target.value)}
                 />
                 <Button
