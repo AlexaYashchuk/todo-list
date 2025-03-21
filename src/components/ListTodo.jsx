@@ -1,22 +1,66 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import "../App.css";
 import { FormOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 
-const ListTodo = ({
-  toDoList,
-  deleteTask,
-  updateTask,
-  editTask,
-  editTaskValue,
-  setEditTaskValue,
-  updateTaskEnter,
-  doneTaskFunc,
-}) => {
+const ListTodo = ({ toDoList, setToDoList }) => {
   const inputRefEdit = useRef(null);
+  const [editTaskValue, setEditTaskValue] = useState("");
 
   const inputFocusEdit = () => {
     inputRefEdit.current.focus();
+  };
+
+  const deleteTask = (id) => {
+    setToDoList(toDoList.filter((item) => item.id !== id));
+  };
+
+  const doneTaskFunc = (id) => {
+    setToDoList(
+      toDoList.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            done: !item.done,
+          };
+        }
+        return item;
+      })
+    );
+  };
+
+  const editTask = (id) => {
+    setToDoList(
+      toDoList.map((item) => {
+        if (item.id === id) {
+          setEditTaskValue(item.task);
+          return { ...item, edit: !item.edit };
+        }
+        return item;
+      })
+    );
+  };
+
+  const updateTask = (id, value) => {
+    setToDoList(
+      toDoList.map((item) => {
+        if (item.id === id) {
+          setEditTaskValue("");
+          return { ...item, task: value, edit: false };
+        }
+        return item;
+      })
+    );
+  };
+
+  const updateTaskEnter = (event, id, value) => {
+    setToDoList(
+      toDoList.map((item) => {
+        if (item.id === id && event.key === "Enter") {
+          return { ...item, task: value, edit: false };
+        } else return item;
+      })
+    );
   };
 
   return (

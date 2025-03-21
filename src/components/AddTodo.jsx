@@ -7,7 +7,6 @@ import "../App.css";
 export const AddToDo = () => {
   const [toDoList, setToDoList] = useState([]);
   const [toDoTask, setToDoTask] = useState("");
-  const [editTaskValue, setEditTaskValue] = useState("");
   const inputRef = useRef(null);
 
   const addToDo = () => {
@@ -38,58 +37,6 @@ export const AddToDo = () => {
     setToDoTask(event.target.value);
   };
 
-  const deleteTask = (id) => {
-    setToDoList(toDoList.filter((item) => item.id !== id));
-  };
-
-  const editTask = (id) => {
-    setToDoList(
-      toDoList.map((item) => {
-        if (item.id === id) {
-          setEditTaskValue(item.task);
-          return { ...item, edit: !item.edit };
-        }
-        return item;
-      })
-    );
-  };
-
-  const updateTask = (id, value) => {
-    setToDoList(
-      toDoList.map((item) => {
-        if (item.id === id) {
-          setEditTaskValue("");
-          return { ...item, task: value, edit: false };
-        }
-        return item;
-      })
-    );
-  };
-
-  const updateTaskEnter = (event, id, value) => {
-    setToDoList(
-      toDoList.map((item) => {
-        if (item.id === id && event.key === "Enter") {
-          return { ...item, task: value, edit: false };
-        } else return item;
-      })
-    );
-  };
-
-  const doneTaskFunc = (id) => {
-    setToDoList(
-      toDoList.map((item) => {
-        if (item.id === id) {
-          return {
-            ...item,
-            done: !item.done,
-          };
-        }
-        return item;
-      })
-    );
-  };
-
   return (
     <>
       <div className="addTask">
@@ -107,16 +54,7 @@ export const AddToDo = () => {
           Add Task
         </Button>
       </div>
-      <ListTodo
-        toDoList={toDoList}
-        deleteTask={deleteTask}
-        updateTask={updateTask}
-        editTask={editTask}
-        editTaskValue={editTaskValue}
-        setEditTaskValue={setEditTaskValue}
-        updateTaskEnter={updateTaskEnter}
-        doneTaskFunc={doneTaskFunc}
-      />
+      <ListTodo toDoList={toDoList} setToDoList={setToDoList} />
     </>
   );
 };
