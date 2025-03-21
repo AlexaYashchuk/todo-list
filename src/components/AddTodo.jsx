@@ -76,6 +76,20 @@ export const AddToDo = () => {
     );
   };
 
+  const doneTaskFunc = (id) => {
+    setToDoList(
+      toDoList.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            done: !item.done,
+          };
+        }
+        return item;
+      })
+    );
+  };
+
   return (
     <>
       <div className="addTask">
@@ -101,6 +115,7 @@ export const AddToDo = () => {
         editTaskValue={editTaskValue}
         setEditTaskValue={setEditTaskValue}
         updateTaskEnter={updateTaskEnter}
+        doneTaskFunc={doneTaskFunc}
       />
     </>
   );

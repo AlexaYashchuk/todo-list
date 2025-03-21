@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useRef } from "react";
 import "../App.css";
 import { FormOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
@@ -11,27 +11,9 @@ const ListTodo = ({
   editTaskValue,
   setEditTaskValue,
   updateTaskEnter,
+  doneTaskFunc,
 }) => {
-  const [list, setList] = useState([]);
   const inputRefEdit = useRef(null);
-
-  useEffect(() => {
-    setList(toDoList);
-  }, [toDoList]);
-
-  const doneTaskFunc = (id) => {
-    setList(
-      list.map((item) => {
-        if (item.id === id) {
-          return {
-            ...item,
-            done: !item.done,
-          };
-        }
-        return item;
-      })
-    );
-  };
 
   const inputFocusEdit = () => {
     inputRefEdit.current.focus();
@@ -39,7 +21,7 @@ const ListTodo = ({
 
   return (
     <div className="toDoList">
-      {list.map((item) => {
+      {toDoList.map((item) => {
         return (
           <div key={item.id}>
             {!item.edit ? (
