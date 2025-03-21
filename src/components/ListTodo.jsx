@@ -3,7 +3,7 @@ import "../App.css";
 import { FormOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 
-export const ListTodo = ({
+const ListTodo = ({
   toDoList,
   deleteTask,
   updateTask,
@@ -12,24 +12,27 @@ export const ListTodo = ({
   setEditTaskValue,
   updateTaskEnter,
 }) => {
-  console.log(toDoList);
-
   const [list, setList] = useState([]);
+  const inputRefEdit = useRef(null);
+
   useEffect(() => {
     setList(toDoList);
   }, [toDoList]);
 
   const doneTaskFunc = (id) => {
-    const newList = [...list];
-    newList.map((item) => {
-      if (item.id === id) {
-        item.done = !item.done;
-      }
-    });
-    setList(newList);
+    setList(
+      list.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            done: !item.done,
+          };
+        }
+        return item;
+      })
+    );
   };
 
-  const inputRefEdit = useRef(null);
   const inputFocusEdit = () => {
     inputRefEdit.current.focus();
   };
@@ -97,3 +100,5 @@ export const ListTodo = ({
     </div>
   );
 };
+
+export { ListTodo };

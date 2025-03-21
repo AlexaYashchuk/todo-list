@@ -6,6 +6,9 @@ import "../App.css";
 
 export const AddToDo = () => {
   const [toDoList, setToDoList] = useState([]);
+  const [toDoTask, setToDoTask] = useState("");
+  const [editTaskValue, setEditTaskValue] = useState("");
+  const inputRef = useRef(null);
 
   const addToDo = () => {
     if (toDoTask.length > 0) {
@@ -27,58 +30,50 @@ export const AddToDo = () => {
     }
   };
 
-  const inputRef = useRef(null);
   const inputFocus = () => {
     inputRef.current.focus();
   };
 
-  const [toDoTask, setToDoTask] = useState("");
   const toDoTaskFunc = (event) => {
     setToDoTask(event.target.value);
   };
 
   const deleteTask = (id) => {
-    const newList = [...toDoList];
-    const listAfterDelete = newList.filter((item) => item.id !== id);
-    setToDoList(listAfterDelete);
+    setToDoList(toDoList.filter((item) => item.id !== id));
   };
 
-  const [editTaskValue, setEditTaskValue] = useState("");
-
   const editTask = (id) => {
-    const newList = [...toDoList];
-    newList.map((item) => {
-      if (item.id === id) {
-        item.edit = !item.edit;
-        if (item.edit) {
+    setToDoList(
+      toDoList.map((item) => {
+        if (item.id === id) {
           setEditTaskValue(item.task);
+          return { ...item, edit: !item.edit };
         }
-      }
-    });
-    setToDoList(newList);
+        return item;
+      })
+    );
   };
 
   const updateTask = (id, value) => {
-    const newList = [...toDoList];
-    newList.map((item) => {
-      if (item.id === id) {
-        item.task = value;
-        item.edit = false;
-      }
-    });
-    setToDoList(newList);
-    setEditTaskValue("");
+    setToDoList(
+      toDoList.map((item) => {
+        if (item.id === id) {
+          setEditTaskValue("");
+          return { ...item, task: value, edit: false };
+        }
+        return item;
+      })
+    );
   };
 
   const updateTaskEnter = (event, id, value) => {
-    const newList = [...toDoList];
-    newList.map((item) => {
-      if (item.id === id && event.key === "Enter") {
-        item.task = value;
-        item.edit = false;
-      }
-    });
-    setToDoList(newList);
+    setToDoList(
+      toDoList.map((item) => {
+        if (item.id === id && event.key === "Enter") {
+          return { ...item, task: value, edit: false };
+        } else return item;
+      })
+    );
   };
 
   return (
