@@ -2,8 +2,9 @@ import { useRef, useState } from "react";
 import "../App.css";
 import { FormOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
+//import { LogListTodo } from "./withLogger";
 
-const ListTodo = ({ toDoList, setToDoList }) => {
+const ListTodo = ({ toDoList, setToDoList, log }) => {
   const inputRefEdit = useRef(null);
   const [editTaskValue, setEditTaskValue] = useState("");
 
@@ -13,6 +14,7 @@ const ListTodo = ({ toDoList, setToDoList }) => {
 
   const deleteTask = (id) => {
     setToDoList(toDoList.filter((item) => item.id !== id));
+    log(`Удалена задача id=` + id);
   };
 
   const doneTaskFunc = (id) => {
@@ -27,6 +29,7 @@ const ListTodo = ({ toDoList, setToDoList }) => {
         return item;
       })
     );
+    log(`Выполнена задача id=` + id);
   };
 
   const editTask = (id) => {
@@ -39,6 +42,7 @@ const ListTodo = ({ toDoList, setToDoList }) => {
         return item;
       })
     );
+    log(`Начато обновление задания id=` + id);
   };
 
   const updateTask = (id, value) => {
@@ -51,6 +55,7 @@ const ListTodo = ({ toDoList, setToDoList }) => {
         return item;
       })
     );
+    log(`Обновлено задание id=` + id);
   };
 
   const updateTaskEnter = (event, id, value) => {
@@ -61,6 +66,7 @@ const ListTodo = ({ toDoList, setToDoList }) => {
         } else return item;
       })
     );
+    log(`Обновлено задание id=` + id);
   };
 
   return (

@@ -3,8 +3,9 @@ import { Button, Input } from "antd";
 import { v4 as uuidv4 } from "uuid";
 import { ListTodo } from "./ListTodo";
 import "../App.css";
+import { LogAddTodo } from "./withLogger";
 
-export const AddToDo = () => {
+export const AddToDo = ({ log }) => {
   const [toDoList, setToDoList] = useState([]);
   const [toDoTask, setToDoTask] = useState("");
   const inputRef = useRef(null);
@@ -15,6 +16,7 @@ export const AddToDo = () => {
         ...toDoList,
         { id: uuidv4(), task: toDoTask, done: false, edit: false },
       ]);
+      log(`Добавлено задание:` + toDoTask);
       setToDoTask("");
     }
   };
@@ -25,10 +27,10 @@ export const AddToDo = () => {
         ...toDoList,
         { id: uuidv4(), task: toDoTask, done: false, edit: false },
       ]);
+      log(`Добавлено задание:` + toDoTask);
       setToDoTask("");
     }
   };
-
   const inputFocus = () => {
     inputRef.current.focus();
   };
@@ -54,7 +56,7 @@ export const AddToDo = () => {
           Add Task
         </Button>
       </div>
-      <ListTodo toDoList={toDoList} setToDoList={setToDoList} />
+      <ListTodo toDoList={toDoList} setToDoList={setToDoList} log={log} />
     </>
   );
 };
