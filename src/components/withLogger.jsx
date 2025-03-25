@@ -1,5 +1,3 @@
-import { AddToDo } from "./AddTodo";
-
 const withLogger = (ComponentWithLogs) => {
   return (props) => {
     const log = (effect) => {
@@ -9,6 +7,4 @@ const withLogger = (ComponentWithLogs) => {
   };
 };
 
-const LogAddTodo = withLogger(AddToDo);
-
-export { LogAddTodo };
+export { withLogger };

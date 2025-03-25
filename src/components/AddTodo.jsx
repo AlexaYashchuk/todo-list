@@ -1,9 +1,9 @@
 import { useState, useRef } from "react";
 import { Button, Input } from "antd";
 import { v4 as uuidv4 } from "uuid";
-import { ListTodo } from "./ListTodo";
+import { LogListTodo } from "./ListTodo";
 import "../App.css";
-import { LogAddTodo } from "./withLogger";
+import { withLogger } from "./withLogger";
 
 export const AddToDo = ({ log }) => {
   const [toDoList, setToDoList] = useState([]);
@@ -56,7 +56,11 @@ export const AddToDo = ({ log }) => {
           Add Task
         </Button>
       </div>
-      <ListTodo toDoList={toDoList} setToDoList={setToDoList} log={log} />
+      <LogListTodo toDoList={toDoList} setToDoList={setToDoList} />
     </>
   );
 };
+
+const LogAddTodo = withLogger(AddToDo);
+
+export { LogAddTodo };

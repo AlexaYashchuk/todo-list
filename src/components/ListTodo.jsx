@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import "../App.css";
 import { FormOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
-//import { LogListTodo } from "./withLogger";
+import { withLogger } from "./withLogger";
 
 const ListTodo = ({ toDoList, setToDoList, log }) => {
   const inputRefEdit = useRef(null);
@@ -133,4 +133,6 @@ const ListTodo = ({ toDoList, setToDoList, log }) => {
   );
 };
 
-export { ListTodo };
+const LogListTodo = withLogger(ListTodo);
+
+export { LogListTodo };

@@ -1,5 +1,5 @@
 import "./App.css";
-import { LogAddTodo } from "./components/withLogger";
+import { LogAddTodo } from "./components/AddTodo";
 
 function App() {
   return (
