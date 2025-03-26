@@ -1,0 +1,23 @@
+/* .registration_form {
+  padding-bottom: 1em;
+} */
+/* .registration_form_el_block {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+.registration_form_el {
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border: 1px solid rgb(202, 27, 170);
+} */
+.registration_form_el_block {
+  display: flex; /* Используем Flexbox для расположения элементов в строку */
+  align-items: center; /* Выравниваем элементы по центру по вертикали */
+  margin-bottom: 15px; /* Отступ между строками формы */
+}
+
+.registration_form_el {
+  flex: 50%; /* Занимает 1/5 ширины блока (20%) */
+  /* margin-right: 10px; Отступ справа для пространства между label и input */
+}
