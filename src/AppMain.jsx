@@ -1,11 +1,7 @@
 import { AppRouter } from "./Routes";
 
 const AppMain = () => {
-  return (
-    <>
-      <AppRouter />
-    </>
-  );
+  return <AppRouter />;
 };
 
 export { AppMain };

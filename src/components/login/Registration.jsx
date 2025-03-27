@@ -83,7 +83,6 @@ const Registration = () => {
             <Select
               className="registration_form_el "
               {...field}
-              //showSearch
               placeholder="Select a gender"
               optionFilterProp="label"
               options={[
