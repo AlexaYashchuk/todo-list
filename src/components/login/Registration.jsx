@@ -1,7 +1,7 @@
 import { useForm, Controller } from "react-hook-form";
-import { Input, Button, Select, Radio } from "antd";
-import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+import { Input, Button, Select } from "antd";
 import "./registration.css";
+import axios from "axios";
 
 const Registration = () => {
   const {
@@ -10,16 +10,23 @@ const Registration = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(JSON.stringify(data));
+  const registration = (data) => {
+    axios
+      .post("https://todo-redev.herokuapp.com/api/users/register", data)
+      .then((response) => {
+        alert("Вы успешно зарегестрированы с id=" + response.data.id);
+      })
+      .catch((error) => {
+        alert("Повторите попытку регистрации! " + error.message);
+      });
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(registration)}>
       <div className="registration_form_el_block">
         <label className="registration_form_el ">UserName</label>
         <Controller
-          name="userName"
+          name="username"
           control={control}
           rules={{ required: "Имя должно быть заполнено" }}
           render={({ field }) => (
@@ -46,28 +53,6 @@ const Registration = () => {
         />
       </div>
       {errors.email && <p>{errors.email.message}</p>}
-      <div className="registration_form_el_block">
-        <label className="registration_form_el ">Age</label>
-        <Controller
-          name="age"
-          control={control}
-          rules={{
-            required: "Введите возраст",
-            max: {
-              value: 99,
-              message: "Возрастные ограничения",
-            },
-            min: {
-              value: 18,
-              message: "Возрастные ограничения",
-            },
-          }}
-          render={({ field }) => (
-            <Input {...field} type="text" className="registration_form_el " />
-          )}
-        />
-      </div>
-      {errors.age && <p>{errors.age.message}</p>}
       <div className="registration_form_el_block">
         <label className="registration_form_el ">Password</label>
         <Controller
@@ -103,11 +88,11 @@ const Registration = () => {
               optionFilterProp="label"
               options={[
                 {
-                  value: "Female",
+                  value: "female",
                   label: "Female",
                 },
                 {
-                  value: "Male",
+                  value: "male",
                   label: "Male",
                 },
               ]}
@@ -119,6 +104,28 @@ const Registration = () => {
         />
       </div>
       {errors.gender && <p>{errors.gender.message}</p>}
+      <div className="registration_form_el_block">
+        <label className="registration_form_el ">Age</label>
+        <Controller
+          name="age"
+          control={control}
+          rules={{
+            required: "Введите возраст",
+            max: {
+              value: 99,
+              message: "Возрастные ограничения",
+            },
+            min: {
+              value: 18,
+              message: "Возрастные ограничения",
+            },
+          }}
+          render={({ field }) => (
+            <Input {...field} type="number" className="registration_form_el " />
+          )}
+        />
+      </div>
+      {errors.age && <p>{errors.age.message}</p>}
       <Button htmlType="submit" className="registration_form_el ">
         Sign Up
       </Button>

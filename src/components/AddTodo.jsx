@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { LogListTodo } from "./ListTodo";
 import "../App.css";
 import { withLogger } from "./withLogger";
+import { Link } from "react-router-dom";
 
 export const AddToDo = ({ log }) => {
   const [toDoList, setToDoList] = useState([]);
@@ -16,8 +17,8 @@ export const AddToDo = ({ log }) => {
         ...toDoList,
         { id: uuidv4(), task: toDoTask, done: false, edit: false },
       ]);
-      log(`Добавлено задание:` + toDoTask);
       setToDoTask("");
+      log(`Добавлено задание:` + toDoTask);
     }
   };
 
@@ -27,8 +28,8 @@ export const AddToDo = ({ log }) => {
         ...toDoList,
         { id: uuidv4(), task: toDoTask, done: false, edit: false },
       ]);
-      log(`Добавлено задание:` + toDoTask);
       setToDoTask("");
+      log(`Добавлено задание:` + toDoTask);
     }
   };
   const inputFocus = () => {
@@ -41,22 +42,31 @@ export const AddToDo = ({ log }) => {
 
   return (
     <>
-      <div className="addTask">
-        <Input
-          maxLength="50"
-          placeholder="What is the task today?"
-          type="text"
-          value={toDoTask}
-          onChange={toDoTaskFunc}
-          ref={inputRef}
-          onMouseEnter={inputFocus}
-          onKeyUp={addToDoEnter}
-        />
-        <Button color="purple" variant="solid" onClick={addToDo}>
-          Add Task
-        </Button>
+      <div className="mainDiv">
+        <h1>Get things done!</h1>
+        <div className="addTask">
+          <Input
+            maxLength="50"
+            placeholder="What is the task today?"
+            type="text"
+            value={toDoTask}
+            onChange={toDoTaskFunc}
+            ref={inputRef}
+            onMouseEnter={inputFocus}
+            onKeyUp={addToDoEnter}
+          />
+          <Button color="purple" variant="solid" onClick={addToDo}>
+            Add Task
+          </Button>
+        </div>
+        <LogListTodo toDoList={toDoList} setToDoList={setToDoList} />
       </div>
-      <LogListTodo toDoList={toDoList} setToDoList={setToDoList} />
+      <p>Want to go out?</p>
+      <Link to="/todo-list/login">
+        <Button color="primary" variant="filled">
+          Log Out
+        </Button>
+      </Link>
     </>
   );
 };

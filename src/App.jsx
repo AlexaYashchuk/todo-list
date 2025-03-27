@@ -1,22 +1,21 @@
 import "./App.css";
 import { Link } from "react-router-dom";
 import { Button } from "antd";
+import { Registration } from "./components/login/Registration";
 
 function App() {
   return (
-    <div className="mainDiv">
-      <Link to="/todo-list/registration">
-        <Button color="primary" variant="filled">
-          Зарегистрироваться
-        </Button>
-      </Link>
+    <>
+      <div className="mainDiv">
+        <Registration />
+      </div>
       <p>Already have an account?</p>
       <Link to="/todo-list/login">
         <Button color="primary" variant="filled">
-          Войти в аккаунт
+          Log In
         </Button>
       </Link>
-    </div>
+    </>
   );
 }
 
