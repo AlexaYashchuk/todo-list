@@ -1,43 +1,35 @@
 import { useState, useRef } from "react";
 import { Button, Input } from "antd";
-import { v4 as uuidv4 } from "uuid";
 import { LogListTodo } from "./ListTodo";
 import "../App.css";
 import { withLogger } from "./withLogger";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToDoActions } from "../redux/actions/addTodoActions";
 
 export const AddToDo = ({ log }) => {
-  const [toDoList, setToDoList] = useState([]);
-  const [toDoTask, setToDoTask] = useState("");
   const inputRef = useRef(null);
+  const [task, setTask] = useState("");
+  const dispatch = useDispatch();
 
-  const addToDo = () => {
-    if (toDoTask.length > 0) {
-      setToDoList([
-        ...toDoList,
-        { id: uuidv4(), task: toDoTask, done: false, edit: false },
-      ]);
-      setToDoTask("");
-      log(`Добавлено задание:` + toDoTask);
+  const handleAddTodo = () => {
+    if (task.length > 0) {
+      dispatch(addToDoActions(task));
+      setTask("");
+      log(`Добавлено задание ` + task);
     }
   };
 
-  const addToDoEnter = (event) => {
+  const handleAddTodoEnter = (event) => {
     if (event.key === "Enter" && event.target.value.length > 0) {
-      setToDoList([
-        ...toDoList,
-        { id: uuidv4(), task: toDoTask, done: false, edit: false },
-      ]);
-      setToDoTask("");
-      log(`Добавлено задание:` + toDoTask);
+      dispatch(addToDoActions(task));
+      setTask("");
+      log(`Добавлено задание ` + task);
     }
   };
+
   const inputFocus = () => {
     inputRef.current.focus();
-  };
-
-  const toDoTaskFunc = (event) => {
-    setToDoTask(event.target.value);
   };
 
   return (
@@ -46,20 +38,20 @@ export const AddToDo = ({ log }) => {
         <h1>Get things done!</h1>
         <div className="addTask">
           <Input
-            maxLength="50"
-            placeholder="What is the task today?"
-            type="text"
-            value={toDoTask}
-            onChange={toDoTaskFunc}
             ref={inputRef}
             onMouseEnter={inputFocus}
-            onKeyUp={addToDoEnter}
+            maxLength="50"
+            placeholder="What is the task today REDUX?"
+            type="text"
+            value={task}
+            onChange={(e) => setTask(e.target.value)}
+            onKeyUp={handleAddTodoEnter}
           />
-          <Button color="purple" variant="solid" onClick={addToDo}>
-            Add Task
+          <Button color="purple" variant="solid" onClick={handleAddTodo}>
+            REDUX
           </Button>
         </div>
-        <LogListTodo toDoList={toDoList} setToDoList={setToDoList} />
+        <LogListTodo />
       </div>
       <p>Want to go out?</p>
       <Link to="/todo-list/login">

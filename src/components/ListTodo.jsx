@@ -3,75 +3,49 @@ import "../App.css";
 import { FormOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import { withLogger } from "./withLogger";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteTodoAction,
+  doneTodoAction,
+  editTodoAction,
+  updateTodoAction,
+} from "../redux/actions/addTodoActions";
 
-const ListTodo = ({ toDoList, setToDoList, log }) => {
+const ListTodo = ({ log }) => {
   const inputRefEdit = useRef(null);
   const [editTaskValue, setEditTaskValue] = useState("");
+
+  const dispatch = useDispatch();
+  const listToDo = useSelector((state) => state.todos.toDoList);
 
   const inputFocusEdit = () => {
     inputRefEdit.current.focus();
   };
 
-  const deleteTask = (id) => {
-    setToDoList(toDoList.filter((item) => item.id !== id));
-    log(`Удалена задача id=` + id);
+  const handleDeleteTodo = (id) => {
+    dispatch(deleteTodoAction(id));
+    log(`Удалено задание id=` + id);
   };
 
-  const doneTaskFunc = (id) => {
-    setToDoList(
-      toDoList.map((item) => {
-        if (item.id === id) {
-          return {
-            ...item,
-            done: !item.done,
-          };
-        }
-        return item;
-      })
-    );
-    log(`Выполнена задача id=` + id);
+  const taskFuncDone = (id) => {
+    dispatch(doneTodoAction(id));
+    log(`Выполнено задание id=` + id);
   };
 
-  const editTask = (id) => {
-    setToDoList(
-      toDoList.map((item) => {
-        if (item.id === id) {
-          setEditTaskValue(item.task);
-          return { ...item, edit: !item.edit };
-        }
-        return item;
-      })
-    );
-    log(`Начато обновление задания id=` + id);
+  const taskFuncEdit = (id) => {
+    dispatch(editTodoAction(id));
+    log(`Начато редактирование задания id=` + id);
   };
 
-  const updateTask = (id, value) => {
-    setToDoList(
-      toDoList.map((item) => {
-        if (item.id === id) {
-          setEditTaskValue("");
-          return { ...item, task: value, edit: false };
-        }
-        return item;
-      })
-    );
-    log(`Обновлено задание id=` + id);
-  };
-
-  const updateTaskEnter = (event, id, value) => {
-    setToDoList(
-      toDoList.map((item) => {
-        if (item.id === id && event.key === "Enter") {
-          return { ...item, task: value, edit: false };
-        } else return item;
-      })
-    );
-    log(`Обновлено задание id=` + id);
+  const taskFuncUpdate = (id, editTaskValue) => {
+    dispatch(updateTodoAction(id, editTaskValue));
+    setEditTaskValue("");
+    log(`Редактирование завершено id=` + id);
   };
 
   return (
     <div className="toDoList">
-      {toDoList.map((item) => {
+      {listToDo.map((item) => {
         return (
           <div key={item.id}>
             {!item.edit ? (
@@ -79,7 +53,7 @@ const ListTodo = ({ toDoList, setToDoList, log }) => {
                 <Button
                   color="purple"
                   variant="solid"
-                  onClick={() => doneTaskFunc(item.id)}
+                  onClick={() => taskFuncDone(item.id)}
                 >
                   {!item.done ? (
                     <p>{item.task}</p>
@@ -92,14 +66,17 @@ const ListTodo = ({ toDoList, setToDoList, log }) => {
                 <Button
                   color="purple"
                   variant="solid"
-                  onClick={() => editTask(item.id)}
+                  onClick={() => {
+                    taskFuncEdit(item.id);
+                    setEditTaskValue(item.task);
+                  }}
                 >
                   <FormOutlined />
                 </Button>
                 <Button
                   color="purple"
                   variant="solid"
-                  onClick={() => deleteTask(item.id)}
+                  onClick={() => handleDeleteTodo(item.id)}
                 >
                   <DeleteOutlined />
                 </Button>
@@ -112,15 +89,12 @@ const ListTodo = ({ toDoList, setToDoList, log }) => {
                   ref={inputRefEdit}
                   type="text"
                   value={editTaskValue}
-                  onKeyDown={(event) =>
-                    updateTaskEnter(event, item.id, editTaskValue)
-                  }
                   onChange={(event) => setEditTaskValue(event.target.value)}
                 />
                 <Button
                   color="purple"
                   variant="solid"
-                  onClick={() => updateTask(item.id, editTaskValue)}
+                  onClick={() => taskFuncUpdate(item.id, editTaskValue)}
                 >
                   Update
                 </Button>
