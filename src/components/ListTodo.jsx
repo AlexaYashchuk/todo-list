@@ -9,7 +9,7 @@ import {
   doneTodoAction,
   editTodoAction,
   updateTodoAction,
-} from "../redux/actions/addTodoActions";
+} from "../redux/actions/todoActions";
 
 const ListTodo = ({ log }) => {
   const inputRefEdit = useRef(null);

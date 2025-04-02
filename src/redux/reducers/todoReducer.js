@@ -4,7 +4,7 @@ import {
   DONE_TODO,
   EDIT_TODO,
   UPDATE_TODO,
-} from "../actions/addTodoActions";
+} from "../actions/todoActions";
 
 const initialState = {
   toDoList: [],

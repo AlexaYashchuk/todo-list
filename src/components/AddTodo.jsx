@@ -5,7 +5,7 @@ import "../App.css";
 import { withLogger } from "./withLogger";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addToDoActions } from "../redux/actions/addTodoActions";
+import { addToDoActions } from "../redux/actions/todoActions";
 
 export const AddToDo = ({ log }) => {
   const inputRef = useRef(null);
@@ -41,14 +41,14 @@ export const AddToDo = ({ log }) => {
             ref={inputRef}
             onMouseEnter={inputFocus}
             maxLength="50"
-            placeholder="What is the task today REDUX?"
+            placeholder="What is the task today?"
             type="text"
             value={task}
             onChange={(e) => setTask(e.target.value)}
             onKeyUp={handleAddTodoEnter}
           />
           <Button color="purple" variant="solid" onClick={handleAddTodo}>
-            REDUX
+            Add
           </Button>
         </div>
         <LogListTodo />
