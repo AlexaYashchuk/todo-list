@@ -5,40 +5,40 @@ import { Button, Input } from "antd";
 import { withLogger } from "./withLogger";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  deleteTodoAction,
-  doneTodoAction,
-  editTodoAction,
-  updateTodoAction,
-} from "../redux/actions/todoActions";
+  deleteTodoRTK,
+  doneTodoRTK,
+  editTodoRTK,
+  updateTodoRTK,
+} from "../RTK/todoSlice";
 
 const ListTodo = ({ log }) => {
   const inputRefEdit = useRef(null);
   const [editTaskValue, setEditTaskValue] = useState("");
 
   const dispatch = useDispatch();
-  const listToDo = useSelector((state) => state.todos.toDoList);
+  const listToDo = useSelector((state) => state.todo.toDoList);
 
   const inputFocusEdit = () => {
     inputRefEdit.current.focus();
   };
 
   const handleDeleteTodo = (id) => {
-    dispatch(deleteTodoAction(id));
+    dispatch(deleteTodoRTK(id));
     log(`Удалено задание id=` + id);
   };
 
   const taskFuncDone = (id) => {
-    dispatch(doneTodoAction(id));
+    dispatch(doneTodoRTK({ id }));
     log(`Выполнено задание id=` + id);
   };
 
   const taskFuncEdit = (id) => {
-    dispatch(editTodoAction(id));
+    dispatch(editTodoRTK({ id }));
     log(`Начато редактирование задания id=` + id);
   };
 
   const taskFuncUpdate = (id, editTaskValue) => {
-    dispatch(updateTodoAction(id, editTaskValue));
+    dispatch(updateTodoRTK({ id, editTaskValue }));
     setEditTaskValue("");
     log(`Редактирование завершено id=` + id);
   };

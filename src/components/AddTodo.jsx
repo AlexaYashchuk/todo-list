@@ -5,7 +5,7 @@ import "../App.css";
 import { withLogger } from "./withLogger";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addToDoActions } from "../redux/actions/todoActions";
+import { addTodoRTK } from "../RTK/todoSlice";
 
 export const AddToDo = ({ log }) => {
   const inputRef = useRef(null);
@@ -14,7 +14,7 @@ export const AddToDo = ({ log }) => {
 
   const handleAddTodo = () => {
     if (task.length > 0) {
-      dispatch(addToDoActions(task));
+      dispatch(addTodoRTK({ task }));
       setTask("");
       log(`Добавлено задание ` + task);
     }
@@ -22,7 +22,7 @@ export const AddToDo = ({ log }) => {
 
   const handleAddTodoEnter = (event) => {
     if (event.key === "Enter" && event.target.value.length > 0) {
-      dispatch(addToDoActions(task));
+      dispatch(addTodoRTK({ task }));
       setTask("");
       log(`Добавлено задание ` + task);
     }
@@ -48,7 +48,7 @@ export const AddToDo = ({ log }) => {
             onKeyUp={handleAddTodoEnter}
           />
           <Button color="purple" variant="solid" onClick={handleAddTodo}>
-            Add
+            Add Task
           </Button>
         </div>
         <LogListTodo />
