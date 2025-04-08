@@ -1,7 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-// import { AppMain } from "./AppMain";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { storeRTK } from "./RTK/storeRTK";

@@ -18,31 +18,29 @@ const todoSliceRTK = createSlice({
       });
     },
     deleteTodoRTK: (state, action) => {
-      state.toDoList = state.toDoList.filter(
-        (item) => item.id !== action.payload
+      const index = state.toDoList.findIndex(
+        (item) => item.id === action.payload.id
       );
+      state.toDoList.splice(index, 1);
     },
     doneTodoRTK: (state, action) => {
-      state.toDoList.map((item) => {
-        if (item.id === action.payload.id) {
-          item.done = !item.done;
-        }
-      });
+      const index = state.toDoList.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      state.toDoList[index].done = !state.toDoList[index].done;
     },
     editTodoRTK: (state, action) => {
-      state.toDoList.map((item) => {
-        if (item.id === action.payload.id) {
-          item.edit = !item.edit;
-        }
-      });
+      const index = state.toDoList.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      state.toDoList[index].edit = !state.toDoList[index].edit;
     },
     updateTodoRTK: (state, action) => {
-      state.toDoList.map((item) => {
-        if (item.id === action.payload.id) {
-          item.edit = false;
-          item.task = action.payload.editTaskValue;
-        }
-      });
+      const index = state.toDoList.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      state.toDoList[index].edit = false;
+      state.toDoList[index].task = action.payload.editTaskValue;
     },
   },
 });
@@ -54,4 +52,7 @@ export const {
   editTodoRTK,
   updateTodoRTK,
 } = todoSliceRTK.actions;
+
 export default todoSliceRTK.reducer;
+
+export const selectToDoList = (state) => state.todo.toDoList;

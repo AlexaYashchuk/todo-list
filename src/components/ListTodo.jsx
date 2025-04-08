@@ -10,20 +10,21 @@ import {
   editTodoRTK,
   updateTodoRTK,
 } from "../RTK/todoSlice";
+import { selectToDoList } from "../RTK/todoSlice";
 
 const ListTodo = ({ log }) => {
   const inputRefEdit = useRef(null);
   const [editTaskValue, setEditTaskValue] = useState("");
 
   const dispatch = useDispatch();
-  const listToDo = useSelector((state) => state.todo.toDoList);
+  const listToDo = useSelector(selectToDoList);
 
   const inputFocusEdit = () => {
     inputRefEdit.current.focus();
   };
 
   const handleDeleteTodo = (id) => {
-    dispatch(deleteTodoRTK(id));
+    dispatch(deleteTodoRTK({ id }));
     log(`Удалено задание id=` + id);
   };
 
