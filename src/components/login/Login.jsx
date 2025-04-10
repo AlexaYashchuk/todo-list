@@ -5,6 +5,8 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../RTK/loginSlice";
 
 const schema = yup.object().shape({
   email: yup
@@ -29,24 +31,13 @@ const Login = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const loginAxios = (data) => {
-    axios
-      .post(`https://todo-redev.herokuapp.com/api/auth/login`, data, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        localStorage.setItem("token", response.data.token);
-        const token = localStorage.getItem("token");
-        if (token) {
-          navigate("/todo-list/addTodo");
-        }
-      })
-      .catch((error) => {
-        alert("Такого пользователя не существует! " + error.message);
+    dispatch(loginUser(data))
+      .unwrap()
+      .then(() => {
+        navigate("/todo-list/addTodo");
       });
   };
 

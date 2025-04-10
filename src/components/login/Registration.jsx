@@ -1,9 +1,14 @@
 import { useForm, Controller } from "react-hook-form";
 import { Input, Button, Select } from "antd";
 import "./registration.css";
-import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { registerUser } from "../../RTK/registrationSlice";
+import { useEffect } from "react";
 
 const Registration = () => {
+  const dispath = useDispatch();
+  // const { error } = useSelector((state) => state.registration);
+
   const {
     control,
     handleSubmit,
@@ -11,15 +16,14 @@ const Registration = () => {
   } = useForm();
 
   const registration = (data) => {
-    axios
-      .post("https://todo-redev.herokuapp.com/api/users/register", data)
-      .then((response) => {
-        alert("Вы успешно зарегестрированы с id=" + response.data.id);
-      })
-      .catch((error) => {
-        alert("Повторите попытку регистрации! " + error.message);
-      });
+    dispath(registerUser(data));
   };
+
+  // useEffect(() => {
+  //   if (error) {
+  //     alert("Повторите попытку рестрации" + error.message);
+  //   }
+  // }, [error]);
 
   return (
     <form onSubmit={handleSubmit(registration)}>
