@@ -4,9 +4,10 @@ import "./registration.css";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../RTK/loginSlice";
+import { Loader } from "../loader/Loader";
+import { useState } from "react";
 
 const schema = yup.object().shape({
   email: yup
@@ -33,12 +34,26 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const loginAxios = (data) => {
-    dispatch(loginUser(data))
-      .unwrap()
-      .then(() => {
-        navigate("/todo-list/addTodo");
-      });
+  const [isLoading, setIsLoading] = useState(false); // Состояние для загрузки
+
+  // const loginAxios = (data) => {
+  //   dispatch(loginUser(data))
+  //     .unwrap()
+  //     .then(() => {
+  //       navigate("/todo-list/addTodo");
+  //     });
+  // };
+
+  const loginAxios = async (data) => {
+    setIsLoading(true); // Устанавливаем состояние загрузки в true
+    try {
+      await dispatch(loginUser(data)).unwrap(); // Ждем завершения запроса
+      navigate("/todo-list/addTodo"); // Переход после успешного логина
+    } catch (error) {
+      console.error("Login failed:", error); // Обработка ошибок (если нужно)
+    } finally {
+      setIsLoading(false); // Сбрасываем состояние загрузки
+    }
   };
 
   return (
@@ -86,6 +101,7 @@ const Login = () => {
           Sign Up
         </Button>
       </Link>
+      {isLoading && <Loader />}
     </>
   );
 };
