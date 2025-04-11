@@ -34,25 +34,17 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [isLoading, setIsLoading] = useState(false); // Состояние для загрузки
-
-  // const loginAxios = (data) => {
-  //   dispatch(loginUser(data))
-  //     .unwrap()
-  //     .then(() => {
-  //       navigate("/todo-list/addTodo");
-  //     });
-  // };
+  const [isLoading, setIsLoading] = useState(false);
 
   const loginAxios = async (data) => {
-    setIsLoading(true); // Устанавливаем состояние загрузки в true
+    setIsLoading(true);
     try {
-      await dispatch(loginUser(data)).unwrap(); // Ждем завершения запроса
-      navigate("/todo-list/addTodo"); // Переход после успешного логина
+      await dispatch(loginUser(data)).unwrap();
+      navigate("/todo-list/addTodo");
     } catch (error) {
-      console.error("Login failed:", error); // Обработка ошибок (если нужно)
+      console.error("Login failed:", error);
     } finally {
-      setIsLoading(false); // Сбрасываем состояние загрузки
+      setIsLoading(false);
     }
   };
 

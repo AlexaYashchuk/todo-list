@@ -1,13 +1,11 @@
 import { useForm, Controller } from "react-hook-form";
 import { Input, Button, Select } from "antd";
 import "./registration.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { registerUser } from "../../RTK/registrationSlice";
-import { useEffect } from "react";
 
 const Registration = () => {
   const dispath = useDispatch();
-  // const { error } = useSelector((state) => state.registration);
 
   const {
     control,
@@ -18,12 +16,6 @@ const Registration = () => {
   const registration = (data) => {
     dispath(registerUser(data));
   };
-
-  // useEffect(() => {
-  //   if (error) {
-  //     alert("Повторите попытку рестрации" + error.message);
-  //   }
-  // }, [error]);
 
   return (
     <form onSubmit={handleSubmit(registration)}>
