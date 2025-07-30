@@ -1,8 +1,8 @@
-# 📝 ToDo List (React + Redux Toolkit + JavaScript)
+# ToDo List (React + Redux Toolkit + JavaScript)
 
 Функциональный ToDo список, разработанный с использованием **React**, **Redux Toolkit**, **JavaScript** и **localStorage**.
 
-## Deploy
+##
 
 [Открыть приложение](https://alexayashchuk.github.io/todo-list/)
 
@@ -42,4 +42,4 @@ todo-list/
 ## Автор
 
 - [Александра Ящук – LinkedIn](https://www.linkedin.com/in/aliaksandra-yashchuk-aa7ba4214/)
-- [GitHub профайл](https://github.com/AlexaYashchuk)
+- [Александра Ящук – GitHub](https://github.com/AlexaYashchuk)
